@@ -7,7 +7,7 @@ const studentsCollection = db.collection("students");
 
 const run = async () => {
   try {
-    // await getUsersExample();
+    await getUsersExample();
     // await task1();
     // await task2();
     // await task3();
