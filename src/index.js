@@ -169,25 +169,52 @@ async function task7() {
 async function task8() {
   try {
     const result = await articlesCollection.bulkWrite([
-      { insertOne: { document: { type: "a" } } },
-      { insertOne: { document: { type: "b" } } },
-      { insertOne: { document: { type: "c" } } },
+      {
+        insertOne: {
+          document: {
+            name: "A",
+            description: "Type a",
+            type: "a",
+            tags: [],
+          },
+        },
+      },
+      {
+        insertOne: {
+          document: {
+            name: "B",
+            description: "Type b",
+            type: "b",
+            tags: [],
+          },
+        },
+      },
+      {
+        insertOne: {
+          document: {
+            name: "C",
+            description: "Type b",
+            type: "c",
+            tags: [],
+          },
+        },
+      },
       {
         updateMany: {
           filter: { type: "a" },
-          update: { $set: { tag: ["tag1-a", "tag2-a", "tag3"] } },
+          update: { $set: { tags: ["tag1-a", "tag2-a", "tag3"] } },
         },
       },
       {
         updateMany: {
           filter: { type: { $ne: "a" } },
-          update: { $push: { tag: { $each: ["tag2", "tag3", "super"] } } },
+          update: { $push: { tags: { $each: ["tag2", "tag3", "super"] } } },
         },
       },
       {
         updateMany: {
           filter: {},
-          update: { $pull: { tag: { $in: ["tag2", "tag1-a"] } } },
+          update: { $pull: { tags: { $in: ["tag2", "tag1-a"] } } },
         },
       },
     ]);
@@ -202,7 +229,7 @@ async function task9() {
   try {
     const result = await articlesCollection
       .find({
-        $or: [{ tag: { $in: ["super"] } }, { tag: { $in: ["tag2-a"] } }],
+        $or: [{ tags: { $in: ["super"] } }, { tags: { $in: ["tag2-a"] } }],
       })
       .toArray();
     console.log("Task9: ", result);
